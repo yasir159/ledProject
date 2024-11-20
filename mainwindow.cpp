@@ -73,36 +73,67 @@ void MainWindow::updateServo(QString command) {
     }
 }
 
+//red slider widget function
 void MainWindow::on_red_slider_valueChanged(int value)
 {
     ui -> red_value_label->setText(QString("%1").arg(value));
 
     MainWindow::updateRGB(QString("r%1").arg(value));
-    qDebug() << value;
+    qDebug() << "r" << value;
 }
 
+//green slider widget function
 void MainWindow::on_green_slider_valueChanged(int value)
 {
     ui -> green_value_label->setText(QString("%1").arg(value));
 
     MainWindow::updateRGB(QString("g%1").arg(value));
-    qDebug() << value;
+    qDebug() << "g" << value;
 }
 
+//blue slider widget function
 void MainWindow::on_blue_slider_valueChanged(int value)
 {
     ui -> blue_value_label->setText(QString("%1").arg(value));
 
     MainWindow::updateRGB(QString("b%1").arg(value));
-    qDebug() << value;
+    qDebug() << "b" << value;
 }
 
 void MainWindow::updateRGB(QString command) {
     if(esp32 -> isWritable()) {
+        QString formattedCommand = command + "\n";
         esp32 -> write(command.toStdString().c_str());
     }
     else {
         qDebug() <<"Couldnt write to serial!";
     }
+}
+
+
+void MainWindow::on_red_value_input_label_textChanged(int value)
+{
+    ui -> red_value_label->setText(QString("%1").arg(value));
+
+    MainWindow::updateRGB(QString("r%1").arg(value));
+    qDebug() << "r" << value;
+}
+
+
+void MainWindow::on_green_value_input_label_textChanged(int value)
+{
+    ui -> green_value_label->setText(QString("%1").arg(value));
+
+    MainWindow::updateRGB(QString("g%1").arg(value));
+    qDebug() << "g" << value;
+}
+
+
+void MainWindow::on_blue_value_input_label_textChanged(int value)
+{
+    ui -> blue_value_label->setText(QString("%1").arg(value));
+
+    MainWindow::updateRGB(QString("b%1").arg(value));
+    qDebug() << "b" << value;
 }
 

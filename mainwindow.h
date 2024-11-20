@@ -28,6 +28,10 @@ private slots:
 
     void updateRGB(QString);
 
+    void on_red_value_input_label_textChanged(int value);
+    void on_green_value_input_label_textChanged(int value);
+    void on_blue_value_input_label_textChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     QString servoSetting;

@@ -18,6 +18,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -35,6 +36,9 @@ public:
     QLabel *red_value_label;
     QLabel *green_value_label;
     QLabel *blue_value_label;
+    QTextEdit *red_value_input_label;
+    QTextEdit *green_value_input_label;
+    QTextEdit *blue_value_input_label;
     QMenuBar *menubar;
     QMenu *menuLED_Strip_Controller;
     QStatusBar *statusbar;
@@ -57,17 +61,17 @@ public:
         blue_label->setGeometry(QRect(50, 110, 37, 12));
         red_slider = new QSlider(centralwidget);
         red_slider->setObjectName("red_slider");
-        red_slider->setGeometry(QRect(100, 30, 160, 16));
+        red_slider->setGeometry(QRect(90, 140, 160, 16));
         red_slider->setMaximum(255);
         red_slider->setOrientation(Qt::Orientation::Horizontal);
         green_slider = new QSlider(centralwidget);
         green_slider->setObjectName("green_slider");
-        green_slider->setGeometry(QRect(100, 70, 160, 16));
+        green_slider->setGeometry(QRect(90, 150, 160, 16));
         green_slider->setMaximum(255);
         green_slider->setOrientation(Qt::Orientation::Horizontal);
         blue_slider = new QSlider(centralwidget);
         blue_slider->setObjectName("blue_slider");
-        blue_slider->setGeometry(QRect(100, 110, 160, 16));
+        blue_slider->setGeometry(QRect(90, 160, 160, 16));
         blue_slider->setMaximum(255);
         blue_slider->setOrientation(Qt::Orientation::Horizontal);
         red_value_label = new QLabel(centralwidget);
@@ -79,6 +83,15 @@ public:
         blue_value_label = new QLabel(centralwidget);
         blue_value_label->setObjectName("blue_value_label");
         blue_value_label->setGeometry(QRect(270, 110, 37, 12));
+        red_value_input_label = new QTextEdit(centralwidget);
+        red_value_input_label->setObjectName("red_value_input_label");
+        red_value_input_label->setGeometry(QRect(90, 30, 51, 21));
+        green_value_input_label = new QTextEdit(centralwidget);
+        green_value_input_label->setObjectName("green_value_input_label");
+        green_value_input_label->setGeometry(QRect(90, 70, 51, 21));
+        blue_value_input_label = new QTextEdit(centralwidget);
+        blue_value_input_label->setObjectName("blue_value_input_label");
+        blue_value_input_label->setGeometry(QRect(90, 110, 51, 21));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -106,6 +119,30 @@ public:
         red_value_label->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         green_value_label->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         blue_value_label->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        red_value_input_label->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0</p></body></html>", nullptr));
+        green_value_input_label->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0</p></body></html>", nullptr));
+        blue_value_input_label->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0</p></body></html>", nullptr));
         menuLED_Strip_Controller->setTitle(QCoreApplication::translate("MainWindow", "LED Strip Controller", nullptr));
     } // retranslateUi
 
