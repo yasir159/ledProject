@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -73,33 +74,6 @@ void MainWindow::updateServo(QString command) {
     }
 }
 
-//red slider widget function
-void MainWindow::on_red_slider_valueChanged(int value)
-{
-    ui -> red_value_label->setText(QString("%1").arg(value));
-
-    MainWindow::updateRGB(QString("r%1").arg(value));
-    qDebug() << "r" << value;
-}
-
-//green slider widget function
-void MainWindow::on_green_slider_valueChanged(int value)
-{
-    ui -> green_value_label->setText(QString("%1").arg(value));
-
-    MainWindow::updateRGB(QString("g%1").arg(value));
-    qDebug() << "g" << value;
-}
-
-//blue slider widget function
-void MainWindow::on_blue_slider_valueChanged(int value)
-{
-    ui -> blue_value_label->setText(QString("%1").arg(value));
-
-    MainWindow::updateRGB(QString("b%1").arg(value));
-    qDebug() << "b" << value;
-}
-
 void MainWindow::updateRGB(QString command) {
     if(esp32 -> isWritable()) {
         QString formattedCommand = command + "\n";
@@ -110,30 +84,109 @@ void MainWindow::updateRGB(QString command) {
     }
 }
 
-
-void MainWindow::on_red_value_input_label_textChanged(int value)
+void MainWindow::sendCommand(const QString &command)
 {
-    ui -> red_value_label->setText(QString("%1").arg(value));
-
-    MainWindow::updateRGB(QString("r%1").arg(value));
-    qDebug() << "r" << value;
+    if (esp32 && esp32->isOpen() && esp32->isWritable()) {
+        QString formattedCommand = command; // E nsure the command ends with a newline
+        esp32->write(formattedCommand.toUtf8());   // Send the command as UTF-8 encoded data
+        qDebug() << formattedCommand;
+    } else {
+        qDebug() << "Failed to send command: Serial port not writable.";
+        QMessageBox::warning(this, "Serial Port Error", "Failed to send command: Serial port is not writable.");
+    }
 }
 
-
-void MainWindow::on_green_value_input_label_textChanged(int value)
+void MainWindow::on_red_value_input_label_textChanged(const QString &arg1)
 {
-    ui -> green_value_label->setText(QString("%1").arg(value));
+    ui -> red_value_label->setText(QString("%1").arg(arg1));
 
-    MainWindow::updateRGB(QString("g%1").arg(value));
-    qDebug() << "g" << value;
+    QString text = ui->red_value_input_label->text();
+
+    if(text == "") {
+        ui -> red_value_label -> setText("0");
+    }
 }
 
-
-void MainWindow::on_blue_value_input_label_textChanged(int value)
+void MainWindow::on_green_value_input_label_textChanged(const QString &arg1)
 {
-    ui -> blue_value_label->setText(QString("%1").arg(value));
+    ui -> green_value_label->setText(QString("%1").arg(arg1));
 
-    MainWindow::updateRGB(QString("b%1").arg(value));
-    qDebug() << "b" << value;
+    QString text = ui->green_value_input_label->text();
+
+    if(text == "") {
+        ui -> green_value_label -> setText("0");
+    }
 }
 
+void MainWindow::on_blue_value_input_label_textChanged(const QString &arg1)
+{
+    ui -> blue_value_label->setText(QString("%1").arg(arg1));
+
+    QString text = ui->blue_value_input_label->text();
+
+    if(text == "") {
+        ui -> blue_value_label -> setText("0");
+    }
+}
+
+void MainWindow::on_red_value_input_label_2_textChanged(const QString &arg1)
+{
+    ui -> red_value_label_2->setText(QString("%1").arg(arg1));
+
+    QString text = ui->red_value_input_label_2->text();
+
+    if(text == "") {
+        ui -> red_value_label_2 -> setText("0");
+    }
+}
+
+void MainWindow::on_green_value_input_label_2_textChanged(const QString &arg1)
+{
+    ui -> green_value_label_2->setText(QString("%1").arg(arg1));
+
+    QString text = ui->green_value_input_label_2->text();
+
+    if(text == "") {
+        ui -> green_value_label_2 -> setText("0");
+    }
+}
+
+void MainWindow::on_blue_value_input_label_2_textChanged(const QString &arg1)
+{
+    ui -> blue_value_label_2->setText(QString("%1").arg(arg1));
+
+    QString text = ui->blue_value_input_label_2->text();
+
+    if(text == "") {
+        ui -> blue_value_label_2 -> setText("0");
+    }
+}
+
+void MainWindow::on_set_gradient_button_clicked() {
+    // Collect input values for the first color
+    int r1 = ui->red_value_label->text().toInt();
+    int g1 = ui->green_value_label->text().toInt();
+    int b1 = ui->blue_value_label->text().toInt();
+
+    // Collect input values for the second color
+    int r2 = ui->red_value_label_2->text().toInt();
+    int g2 = ui->green_value_label_2->text().toInt();
+    int b2 = ui->blue_value_label_2->text().toInt();
+
+    // Validate the input values (0-255 range)
+    if ((r1 < 0 || r1 > 255) || (g1 < 0 || g1 > 255) || (b1 < 0 || b1 > 255) ||
+        (r2 < 0 || r2 > 255) || (g2 < 0 || g2 > 255) || (b2 < 0 || b2 > 255)) {
+        QMessageBox::warning(this, "Invalid Input", "RGB values must be between 0 and 255.");
+        return;
+    }
+        \
+        // Send all values in one line
+        QString command = QString("%1 %2 %3 %4 %5 %6")
+              .arg(r1)
+              .arg(g1)
+              .arg(b1)
+              .arg(r2)
+              .arg(g2)
+              .arg(b2);
+        sendCommand(command);
+}

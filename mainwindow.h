@@ -6,6 +6,7 @@
 #include <QSerialPortInfo>
 #include <QDebug>
 #include <QtWidgets>
+#include <QThread>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {class MainWindow;}
@@ -18,19 +19,22 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void sendCommand(const QString &command);
 
 private slots:
     void updateServo(QString command);
 
-    void on_red_slider_valueChanged(int value);
-    void on_green_slider_valueChanged(int value);
-    void on_blue_slider_valueChanged(int value);
-
     void updateRGB(QString);
 
-    void on_red_value_input_label_textChanged(int value);
-    void on_green_value_input_label_textChanged(int value);
-    void on_blue_value_input_label_textChanged(int value);
+    void on_set_gradient_button_clicked();
+
+    void on_red_value_input_label_textChanged(const QString &arg1);
+    void on_green_value_input_label_textChanged(const QString &arg1);
+    void on_blue_value_input_label_textChanged(const QString &arg1);
+
+    void on_red_value_input_label_2_textChanged(const QString &arg1);
+    void on_green_value_input_label_2_textChanged(const QString &arg1);
+    void on_blue_value_input_label_2_textChanged(const QString &arg1);
 
 private:
     Ui::MainWindow *ui;
